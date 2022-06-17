@@ -68,7 +68,14 @@ bool ISILS_Detour() {
 
 void Init() {
 	MessageBoxA(0, "LS Patcher\nMade by GD", "LS Patcher", MB_OK);
-	uintptr_t Add = FindPattern("48 89 5C 24 ? 55 57 41 54 41 55 41 56 48 8B EC 48 83 EC 30 4C 8B E1 48 C7 45 ? ? ? ? ? 45 33 F6 48 8D 4D F0 33 D2 4C 89 75 F0 E8 ? ? ? ? 48");
+	//(TODO) get the address by the string "Reason for Showing/Hiding LoadingScreen is unknown!"
+	uintptr_t Add = FindPattern("48 89 4C 24 ? 55 53 56 57 41 ? 41 ? 48 8B EC 48 83 EC 38 4C 8B F1");
+	if (!Add) {
+		Add = FindPattern("48 89 5C 24 ? 48 89 4C 24 ? 55 56 57 41 54 41 56 48 8B EC 48 83 EC 30 48 8B F1");
+		if (!Add) {
+			FindPattern("48 89 5C 24 ? 55 57 41 54 41 55 41 56 48 8B EC 48 83 EC 30 4C 8B E1");
+		}
+	}
     MH_Initialize();
     MH_CreateHook((LPVOID)Add, ISILS_Detour, nullptr);
 	MH_EnableHook((LPVOID)Add);
@@ -90,4 +97,3 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
-
