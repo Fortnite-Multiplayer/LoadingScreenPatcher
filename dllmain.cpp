@@ -1,4 +1,3 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 #include "minhook/MinHook.h"
 #include <vector>
@@ -76,8 +75,8 @@ void Init() {
 			FindPattern("48 89 5C 24 ? 55 57 41 54 41 55 41 56 48 8B EC 48 83 EC 30 4C 8B E1");
 		}
 	}
-    MH_Initialize();
-    MH_CreateHook((LPVOID)Add, ISILS_Detour, nullptr);
+   	MH_Initialize();
+    	MH_CreateHook((LPVOID)Add, ISILS_Detour, nullptr);
 	MH_EnableHook((LPVOID)Add);
 }
 
